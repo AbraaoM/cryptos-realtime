@@ -11,6 +11,8 @@ services:
   api: 
     build: "./api"
     container_name: python-container
+    environment:
+      MYSQL_ROOT_PASSWORD: projetoCryptos
     volumes:
       - ./api:/usr/src/app
     restart: always
