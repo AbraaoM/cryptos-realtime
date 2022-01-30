@@ -12,7 +12,7 @@ db = SQLAlchemy(app)
 
 class Cryptos(db.Model):
   id = db.Column(db.Integer, primary_key = True)
-  currency = db.Column(db.String(4))
+  currency = db.Column(db.String(10))
   timeframe = db.Column(db.Integer)
   datetime = db.Column(db.DateTime)
   Open = db.Column(db.Float)
@@ -47,6 +47,20 @@ def open1min(lastPrice: float):
 def close1min(lastPrice: float):
   candle1min['close'] = lastPrice
 
+  try:
+    crypto = Cryptos(currency= "USDC_BTC", 
+                      timeframe= 1, 
+                      datetime= datetime.datetime.now(), 
+                      Open= candle1min['open'],
+                      Low= candle1min['low'],
+                      High= candle1min['high'],
+                      Close= candle1min['close'])
+    db.session.add(crypto)
+    db.session.commit()
+  finally:
+    print("foi")
+
+
 
 
 # currency = GetCurrency("USDC_BTC")
@@ -68,7 +82,6 @@ while True:
   if currentTime.second == 59:
     close1min(currency['last'])
 
-  print(candle1min)
   # if currentTime.minute % 5 == 0:
   #   open5min()
   # if (str(currentTime.minute)[1] == 4 or str(currentTime.minute)[1] == 9) and currentTime.second == 59:
