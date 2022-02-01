@@ -2,7 +2,8 @@ from tokenize import Number
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import requests
-import datetime
+from datetime import datetime
+from pytz import timezone
 import time
 import sys
 
@@ -75,7 +76,7 @@ def close1min(lastPrice: float):
   try:
     crypto1min = Cryptos(currency= currencySymbol, 
                       timeframe= 1, 
-                      datetime= datetime.datetime.now(), 
+                      datetime= datetime.now(timezone('america/sao_paulo')), 
                       Open= candle1min['open'],
                       Low= candle1min['low'],
                       High= candle1min['high'],
@@ -105,7 +106,7 @@ def close5min(lastPrice: float):
   try:
     crypto5min = Cryptos(currency= currencySymbol, 
                       timeframe= 5, 
-                      datetime= datetime.datetime.now(), 
+                      datetime= datetime.now(timezone('america/sao_paulo')), 
                       Open= candle5min['open'],
                       Low= candle5min['low'],
                       High= candle5min['high'],
@@ -135,7 +136,7 @@ def close10min(lastPrice: float):
   try:
     crypto10min = Cryptos(currency= currencySymbol, 
                       timeframe= 10, 
-                      datetime= datetime.datetime.now(), 
+                      datetime= datetime.now(timezone('america/sao_paulo')), 
                       Open= candle10min['open'],
                       Low= candle10min['low'],
                       High= candle10min['high'],
@@ -153,7 +154,8 @@ currencySymbol: str = sys.argv[1]
 while True:
   currency = GetCurrency(currencySymbol)
 
-  currentTime = datetime.datetime.now().time()
+  currentTime = datetime.now(timezone('america/sao_paulo')).time()
+  datetime.now()
   Set1minHigh(float(currency['last']))
   Set1minLow(float(currency['last']))
 
