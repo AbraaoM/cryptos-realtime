@@ -23,6 +23,9 @@ class Cryptos(db.Model):
   High: float = db.Column(db.Float)
   Close: float = db.Column(db.Float)
 
+db.drop_all()
+db.create_all()
+
 # Cria as estruturas que montarão o candle vigente nos timeframes de 
 # 1, 5 e 10 minutos
 candle1min = {'open': 0.0, 'low': 0.0, 'high': 0.0, 'close': 0.0}
